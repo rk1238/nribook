@@ -1,0 +1,31 @@
+<?php
+session_start();
+if(isset($_POST['submit']))
+{
+	$iroll=$_SESSION['us'];
+$target_path='images/';
+$target_path=$target_path.basename($_FILES['image']['name']);
+if(move_uploaded_file($FILES['image']['tmp_name'],$target_path))
+{
+$conn = mysqli_connect('localhost','root','','nrirg');  
+if(!$conn)
+{
+	die('Could not connect: '.mysqli_connect_error()); 
+}
+else
+	{
+	$sql="insert into uploadimg('path','rollno') values('$target_path','$iroll')";
+	if(mysqli_query($conn,$sql))
+							{  
+								 echo "image uploaded success";  
+							}
+							else
+							{
+								echo "image not uploaded";  
+							}
+
+	}
+}
+
+}
+?>
